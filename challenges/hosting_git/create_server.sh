@@ -11,7 +11,6 @@ USERROOTDIR=/home/$USERNAME
 sudo -u $USERNAME mkdir $USERROOTDIR/.ssh && sudo chmod 700 $USERROOTDIR/.ssh
 sudo -u $USERNAME touch $USERROOTDIR/.ssh/authorized_keys && sudo chmod 600 $USERROOTDIR/.ssh/authorized_keys
 
-# echo $SSHKEY | sudo tee $USERROOTDIR/.ssh/authorized_keys
 sudo bash -c "echo '$SSHKEY' >> $USERROOTDIR/.ssh/authorized_keys"
 
 sudo -u $USERNAME mkdir -p $USERROOTDIR/$REPOPATH
