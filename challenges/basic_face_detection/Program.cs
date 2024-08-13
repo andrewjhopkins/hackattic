@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Drawing;
+using System.Net;
 using Newtonsoft.Json;
 
 namespace basic_face_detection;
@@ -35,6 +36,16 @@ class Program
         }
 
         var body = JsonConvert.DeserializeObject<Response>(bodyJson);
-        Console.WriteLine(body.ImageUrl);
+
+        var tempFilePath = Path.Combine(Path.GetTempPath(), "detection_image.jpg");
+
+        using (var httpClient = new HttpClient())
+        {
+            var imageContent = httpClient.GetByteArrayAsync(body.ImageUrl);
+            Task.WaitAll(imageContent);
+            File.WriteAllBytes(tempFilePath, imageContent.Result);
+        }
+
+        var image = Image.FromFile(tempFilePath);
     }
 }
